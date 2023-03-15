@@ -16,11 +16,11 @@ The challenge folder consists of a html file and two images.
 ## admin.html
 Opening `admin.html` with a browser, a login screen is displayed.
 
-![Credchecker login page](Flare-On\Flare-On-8\images\credchecker1.png)
+![Credchecker login page](images/credchecker1.png)
 
 Attempting to login with random values will return a login failed screen.
 
-![Credchecker failed login page](Flare-On\Flare-On-8\images\credchecker2.png)
+![Credchecker failed login page](images/credchecker2.png)
 
 ---
 
@@ -30,7 +30,7 @@ There is a variable called `encoded_key` with the value of `P1xNFigYIh0BGAofD1o5
 
 This looks like base64 encoding but running it through cyberchef decoder does not reveal much information.
 
-![Encoded_key decode result](Flare-On\Flare-On-8\images\credchecker3.png)
+![Encoded_key decode result](images/credchecker3.png)
 
 Moving on, there are two functions `dataEntered()` and `checkCreds()`
 
@@ -44,6 +44,6 @@ Based on this information, the username would be `Admin` and the password would 
 
 Logging in with `Admin` and `Z29sZGVudGlja2V0` will reveal the flag.
 
-![Flag found](Flare-On\Flare-On-8\images\credchecker4.png)
+![Flag found](images/credchecker4.png)
 
 ---
