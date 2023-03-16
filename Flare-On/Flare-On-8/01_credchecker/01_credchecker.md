@@ -46,4 +46,5 @@ Logging in with `Admin` and `Z29sZGVudGlja2V0` will reveal the flag.
 
 ![Flag found](images/credchecker4.png)
 
----
+# Conclusion
+I found this challange easy as it was only HTML and there was no disassembly required. I knew to inspect the html in the browser to see how the script works.
