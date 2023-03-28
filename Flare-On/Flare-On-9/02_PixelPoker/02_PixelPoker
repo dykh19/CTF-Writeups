@@ -1,0 +1,88 @@
+# 02 PixelPoker
+
+## Challenge Prompt
+I said you wouldn't win that last one. I lied. The last challenge was basically a captcha. Now the real work begins. Shall
+we play another game?
+
+---
+
+## Files
+
+```
+|--02_PixelPoker
+    |--PixelPoker.exe
+    |--readme.txt
+```
+
+---
+
+## Initial Analysis
+
+### Strings
+```
+Please play again!
+Womp womp... :(
+i&I Give Up
+h&How To ...
+How To: PixelPoker
+MS Shell Dlg
+Find and click the pixel ^_^
+Let's go!!
+PixelPoker, Version 6.13
+Pixel game that's sweeping the nation!
+```
+Using Strings on the executable shows some strings that might be useful.
+
+### CFF Explorer
+
+Opening the executable in CFF Explorer, I can see that it imports
+```
+KERNEL32.dll
+USER32.dll
+GDI32.dll
+```
+
+Searching the microsoft documentation, GDI32.dll allows applications to use the graphics hardware to display graphics and formatted text.
+
+Looking at the Resource Editor section, there are multiple resources including bitmaps.
+
+Opening the bitmaps folder shows 2 bitmaps named `129` and `133`. Both are just a jumble of pixels that do not look like anything.
+
+## Running the executable
+
+Upon execution, a window appears with the same image as the ones in the bitmap resources. It is hard to make out which bitmap is loaded so I'll leave it as is.
+
+![pixel poker window](images/pixelpoker1.png)
+
+In the title bar, there is a coordinate value that updates as I move my cursor along the window and a counter of `#0/10`. It increases when I click on the window.
+
+When it reaches 10, a popup appears with the title `Please play again!` and the text of `womp womp... :(`. Pressing `Ok` will close the program.
+
+![womp womp](images/pixelpoker2.png)
+
+It looks like I must find the correct pixel within 10 tries or the program will exit.
+
+## Disassembly/Debugging
+
+Loading the executable into IDA Free, the `start` function of the program looks to be setup functions until the function `sub_4016F0`.
+
+Looking into `sub_4016F0`, I see a call to `LoadImageW`. The name variable pushed onto the stack before the call is `0x81`, which is `129`.This might be the bitmap I saw earlier in CFF Explorer.
+
+![LoadImageW](images/pixelpoker3.png)
+
+It then calls `sub_401120` which looks to be loading icons and cursors and `sub_401040` which contains `CreateWindowExW`. I would assume this function spawns the program window.
+
+After getting not much info here, I decided to look at other functions in IDA's function list.
+
+I found a function `sub_4012C0` which seems to contain references to the strings `Please play again!` and `Womp womp... :(`.
+
+![Womp womp](images/pixelpoker4.png)
+
+This gave me the assumption that this function contains the code to check for the user's mouse click and the whether the correct pixel is selected.
+
+## Stuck
+
+After failing to figure out how exactly the function works, I decided to take a look at the solution.
+
+After looking at the solution it seemed that I was on the right track, however I was not able to see the pixel coordinates were compared against a modulus of the image size and a hex value.
+

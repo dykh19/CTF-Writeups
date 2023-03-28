@@ -48,7 +48,7 @@ This hints that the executable will have file read/write functionality and is ab
 
 ### Advanced Static Analysis
 
-Using Cutter to analyse the executable, there are 9 functions including the entry function.
+Using Cutter to analyze the executable, there are 9 functions including the entry function.
 
 ![Cutter function window](images/known4.png)
 
@@ -95,7 +95,7 @@ The image files are viewable and the text files can be read.
 # Conclusion
 I found this challenge quite difficult as I was not well versed in bitwise operations and what they do. 
 
-I got stuck after finding the first hint of `add+ror`. I knew it was hinting at assembly instructions but I did not know what to do with them. It was only after I disassembled the executable that I found out it was refering to the encryption/decryption algorithm.
+I got stuck after finding the first hint of `add+ror`. I knew it was hinting at assembly instructions but I did not know what to do with them. It was only after I disassembled the executable that I found out it was referring to the encryption/decryption algorithm.
 
 In addition, I was not sure when I should move on from basic analysis to advanced analysis as I was afraid I did not find all the clues. 
 
